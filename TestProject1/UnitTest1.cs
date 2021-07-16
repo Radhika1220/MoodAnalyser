@@ -5,26 +5,26 @@ namespace TestProject1
     [TestClass]
     public class UnitTest1
     {
-      //  MoodAnalyser happyMood;
+        //  MoodAnalyser happyMood;
 
         [TestInitialize]
         public void SetUp()
         {
-         //moodAnalyser = new MoodAnalyser(message);
+            //moodAnalyser = new MoodAnalyser(message);
         }
         /// <summary>
         /// UC2-Handling exceptions
         /// </summary>
         [TestMethod]
         public void TestMethodForHappyMood()
-        
+
         {
             string expected = "happy";
             MoodAnalyser moodAnalyser = new MoodAnalyser("I am in happy Mood");
             string actual = moodAnalyser.AnalyzeMood();
             Assert.AreEqual(expected, actual);
         }
-        
+
         [TestMethod]
         public void TestMethodForSadMood()
 
@@ -53,11 +53,11 @@ namespace TestProject1
             string expected = "Mood should not be null";
             try
             {
-                
+
                 MoodAnalyser moodAnalyser = new MoodAnalyser(null);
                 moodAnalyser.AnalyzeMood();
             }
-            catch(CustomException ex)
+            catch (CustomException ex)
             {
                 Assert.AreEqual(expected, ex.Message);
             }
@@ -82,8 +82,8 @@ namespace TestProject1
         /// Using Reflection-UC4-Default Constructor
         /// </summary>
         [TestMethod]
-            public void Reflection_Return_Default_Constructor()
-            {
+        public void Reflection_Return_Default_Constructor()
+        {
             MoodAnalyser expected = new MoodAnalyser();
             object obj = null;
             try
@@ -92,11 +92,11 @@ namespace TestProject1
                 obj = factory.CreateMoodAnalyserObject("MoodAnalyserProblem2.MoodAnalyser", "MoodAnalyser");
 
             }
-            catch(CustomException ex)
+            catch (CustomException ex)
             {
                 throw new System.Exception(ex.Message);
             }
-            }
+        }
         //Neagtive Case
         [TestMethod]
         public void Reflection_Return_Default_Constructor_No_Class_Found()
@@ -144,7 +144,7 @@ namespace TestProject1
             try
             {
                 MoodAnalyserFactory factory = new MoodAnalyserFactory();
-                actual = factory.CreateMoodAnalyserParameterizedObject("MoodAnalyserProblem2.MoodAnalyser", "MoodAnalyser",message);
+                actual = factory.CreateMoodAnalyserParameterizedObject("MoodAnalyserProblem2.MoodAnalyser", "MoodAnalyser", message);
 
             }
             catch (CustomException ex)
@@ -163,7 +163,7 @@ namespace TestProject1
             try
             {
                 MoodAnalyserFactory factory = new MoodAnalyserFactory();
-                actual = factory.CreateMoodAnalyserParameterizedObject("MoodAnalyserProblem2.MoodAna", "MoodAnalyser",message);
+                actual = factory.CreateMoodAnalyserParameterizedObject("MoodAnalyserProblem2.MoodAna", "MoodAnalyser", message);
 
             }
             catch (CustomException actual1)
@@ -171,7 +171,26 @@ namespace TestProject1
                 Assert.AreEqual(expected, actual1.Message);
             }
         }
-    
+        /// <summary>
+        /// UC6-Using Reflection-Invoke Method
+        /// </summary>
+        [TestMethod]
+        public void Reflection_Return_Method()
+        {
+            string expected = "happy";
+            MoodAnalyserFactory factory = new MoodAnalyserFactory();
+            string actual = factory.InvokeAnalyserMethod("happy", "AnalyzeMood");
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void Reflection_Return_Invalid_Method()
+        {
+            string expected = "happy";
+            MoodAnalyserFactory factory = new MoodAnalyserFactory();
+            string actual = factory.InvokeAnalyserMethod("happy", "Analyze");
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
 
