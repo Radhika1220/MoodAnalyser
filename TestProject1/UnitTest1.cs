@@ -12,6 +12,9 @@ namespace TestProject1
         {
          //moodAnalyser = new MoodAnalyser(message);
         }
+        /// <summary>
+        /// UC2-Handling exceptions
+        /// </summary>
         [TestMethod]
         public void TestMethodForHappyMood()
         
@@ -21,6 +24,7 @@ namespace TestProject1
             string actual = moodAnalyser.AnalyzeMood();
             Assert.AreEqual(expected, actual);
         }
+        
         [TestMethod]
         public void TestMethodForSadMood()
 
@@ -39,6 +43,9 @@ namespace TestProject1
             string actual = moodAnalyser.AnalyzeMood();
             Assert.AreEqual(expected, actual);
         }
+        /// <summary>
+        /// UC3-Customized Exception
+        /// </summary>
         [TestMethod]
         public void TestMethodForCustomizedNullException()
 
@@ -72,7 +79,7 @@ namespace TestProject1
             }
         }
         /// <summary>
-        /// Using Reflection-UC4
+        /// Using Reflection-UC4-Default Constructor
         /// </summary>
         [TestMethod]
             public void Reflection_Return_Default_Constructor()
@@ -125,6 +132,46 @@ namespace TestProject1
             }
         }
 
+        /// <summary>
+        /// Using Reflection-UC5-Parameterized Constructor
+        /// </summary>
+        [TestMethod]
+        public void Reflection_Return_Parameterized_Constructor()
+        {
+            string message = "I am in happy mood";
+            MoodAnalyser expected = new MoodAnalyser(message);
+            object actual = null;
+            try
+            {
+                MoodAnalyserFactory factory = new MoodAnalyserFactory();
+                actual = factory.CreateMoodAnalyserParameterizedObject("MoodAnalyserProblem2.MoodAnalyser", "MoodAnalyser",message);
+
+            }
+            catch (CustomException ex)
+            {
+                throw new System.Exception(ex.Message);
+            }
+            actual.Equals(expected);
+        }
+        //Invalid case
+        [TestMethod]
+        public void Reflection_Return_Parameterized_Class_Invalid()
+        {
+            string message = "I am in happy mood";
+            MoodAnalyser expected = new MoodAnalyser(message);
+            object actual = null;
+            try
+            {
+                MoodAnalyserFactory factory = new MoodAnalyserFactory();
+                actual = factory.CreateMoodAnalyserParameterizedObject("MoodAnalyserProblem2.MoodAna", "MoodAnalyser",message);
+
+            }
+            catch (CustomException actual1)
+            {
+                Assert.AreEqual(expected, actual1.Message);
+            }
+        }
+    
     }
 }
 

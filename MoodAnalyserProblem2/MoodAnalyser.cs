@@ -33,7 +33,7 @@ namespace MoodAnalyserProblem2
                     return "sad";
                 }
             }
-            catch(NullReferenceException ex)
+            catch(NullReferenceException)
             {
                 throw new CustomException(CustomException.ExceptionType.NULL_EXCEPTION, "Mood should not be null");
             }
